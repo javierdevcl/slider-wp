@@ -223,7 +223,8 @@ function owl_slider_shortcode($atts) {
     // Atributos configurables
     $atts = shortcode_atts(array(
         'autoplay'      => 'true',
-        'autoplay_time' => 5000,
+        'autoplay_time' => 3000,      // 3 segundos por slide (antes 5s)
+        'speed'         => 300,       // Velocidad de transición en ms
         'loop'          => 'true',
         'aspect_pc'     => '2.63',    // Ratio 1366/520 ≈ 2.63
         'aspect_mobile' => '1.5',     // Ajustar según tus imágenes móviles
@@ -354,7 +355,7 @@ function owl_slider_shortcode($atts) {
                     autoplay: <?php echo $atts['autoplay'] === 'true' ? 'true' : 'false'; ?>,
                     autoplayTimeout: <?php echo absint($atts['autoplay_time']); ?>,
                     autoplayHoverPause: true,
-                    smartSpeed: 500,
+                    smartSpeed: <?php echo absint($atts['speed']); ?>,
                     mouseDrag: true,
                     touchDrag: true
                 });
