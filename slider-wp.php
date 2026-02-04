@@ -251,32 +251,37 @@ function owl_slider_shortcode($atts) {
     ob_start();
     ?>
     <style>
-        /* CSS crítico - funciona SIN JavaScript */
-        #<?php echo esc_attr($slider_id); ?> {
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            background: #f0f0f0;
+        /* CSS crítico con alta especificidad */
+        .owl-carousel#<?php echo esc_attr($slider_id); ?>,
+        #<?php echo esc_attr($slider_id); ?>.owl-carousel {
+            width: 100% !important;
+            position: relative !important;
+            overflow: hidden !important;
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
         }
-        /* Imágenes siempre responsive */
-        #<?php echo esc_attr($slider_id); ?> .owl-slide-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+        /* Imágenes SIEMPRE visibles y responsive */
+        #<?php echo esc_attr($slider_id); ?> .owl-slide-item,
+        #<?php echo esc_attr($slider_id); ?> .owl-slide-item picture,
         #<?php echo esc_attr($slider_id); ?> .owl-slide-item a {
-            display: block;
-            line-height: 0;
+            display: block !important;
+            width: 100% !important;
+            line-height: 0 !important;
         }
-        /* ANTES de que Owl Carousel se inicialice */
-        #<?php echo esc_attr($slider_id); ?>:not(.owl-loaded) {
-            display: block;
+        #<?php echo esc_attr($slider_id); ?> .owl-slide-item img {
+            width: 100% !important;
+            height: auto !important;
+            display: block !important;
+            max-width: 100% !important;
         }
-        #<?php echo esc_attr($slider_id); ?>:not(.owl-loaded) .owl-slide-item {
-            display: none;
+        /* Ocultar slides extra SOLO antes de inicializar */
+        #<?php echo esc_attr($slider_id); ?>:not(.owl-loaded) .owl-slide-item:not(:first-child) {
+            display: none !important;
         }
-        #<?php echo esc_attr($slider_id); ?>:not(.owl-loaded) .owl-slide-item:first-child {
-            display: block;
+        /* Después de inicializar, Owl controla la visibilidad */
+        #<?php echo esc_attr($slider_id); ?>.owl-loaded .owl-slide-item {
+            display: block !important;
         }
     </style>
 
