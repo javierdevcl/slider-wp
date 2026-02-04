@@ -285,7 +285,7 @@ function owl_slider_shortcode($atts) {
         }
     </style>
 
-    <div id="<?php echo esc_attr($slider_id); ?>" class="owl-carousel owl-theme">
+    <div id="<?php echo esc_attr($slider_id); ?>" class="owl-carousel owl-theme" style="width:100%;display:block;opacity:1;visibility:visible;">
         <?php
         $index = 0;
         while ($query->have_posts()) : $query->the_post();
@@ -303,12 +303,15 @@ function owl_slider_shortcode($atts) {
             if (empty($image_pc) && empty($image_mobile)) {
                 continue;
             }
+
+            // Estilo inline para cada slide
+            $slide_style = $is_first ? 'display:block;width:100%;' : '';
         ?>
-        <div class="owl-slide-item">
+        <div class="owl-slide-item" style="<?php echo $slide_style; ?>">
             <?php if (!empty($slide_link)) : ?>
-            <a href="<?php echo esc_url($slide_link); ?>">
+            <a href="<?php echo esc_url($slide_link); ?>" style="display:block;line-height:0;">
             <?php endif; ?>
-                <picture>
+                <picture style="display:block;width:100%;">
                     <?php if (!empty($image_pc)) : ?>
                     <source
                         srcset="<?php echo esc_url($image_pc); ?>"
@@ -317,6 +320,7 @@ function owl_slider_shortcode($atts) {
                     <img
                         src="<?php echo esc_url($image_mobile ?: $image_pc); ?>"
                         alt="<?php the_title_attribute(); ?>"
+                        style="width:100%;height:auto;display:block;max-width:100%;"
                         decoding="<?php echo $is_first ? 'sync' : 'async'; ?>"
                         fetchpriority="<?php echo $is_first ? 'high' : 'low'; ?>"
                         loading="<?php echo $is_first ? 'eager' : 'lazy'; ?>">
